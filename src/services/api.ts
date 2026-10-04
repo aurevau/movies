@@ -37,3 +37,13 @@ export const getUpcoming = async (page = 1): Promise<Movie[]> => {
     if (!res.ok) throw new Error(`Could not load upcoming movies (error ${res.status})`);
     return (await res.json()).results;
 };
+
+
+export const getMovie = async (id: number) => {
+    const res = await fetch(`${BASE_URL}/movie/${id}?language=sv-SE`, {
+        headers
+    });
+
+    if (!res.ok) throw new Error(`Could not load movie (error ${res.status})`);
+    return res.json();
+};

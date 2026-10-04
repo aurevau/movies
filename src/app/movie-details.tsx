@@ -1,30 +1,33 @@
+import Button from "@/components/button";
+import { Favorite } from "@/components/favorite";
 import { Movie } from "@/domain/movie";
+import { getMovie } from "@/services/api";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Button from "./button";
-import { Favorite } from "./favorite";
+import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
+const IMAGE_BASE = "https://image.tmdb.org/t/p/w780";
 
-const IMAGE_BASE = "https://image.tmdb.org/t/p/w342";
-export default function MovieCard({ movie }: {
-    movie: Movie
-}) {
-    const today = new Date().toISOString().slice(0, 10);
-    const isUpcoming = movie.release_date > today;
-    const router = useRouter();
+export default function MovieDetailsScreen() {
+    const { movie: id } = useLocalSearchParams<{ movie: string }>();
+    const [movie, setMovie] = useState<Movie | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<String | null>(null);
 
-    return (
-        <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() =>
-                router.push({
-                    pathname: "/movie-details",
-                    params: { movie: String(movie.id)},
-                })
-            }
-        >
-            <View style={styles.card}>
+    useEffect(() => {
+        getMovie(Number(id))
+            .then(setMovie)
+            .catch((error) => setError(error instanceof Error ? error.message : "Something went wrong"))
+            .finally(() => setLoading(false));
+    }, [id]);
+
+    if (loading) return <ActivityIndicator style={{flex: 1}}/>;
+
+    if (error || !movie) return <Text style={{flex: 1}}/>;
+     return (
+        <ScrollView>
+        <View>
                 <View style={styles.imagePlaceholder}>
                     <Image source={{ uri: `${IMAGE_BASE}${movie.poster_path}` }} style={styles.image} resizeMode="cover"></Image>
                     <Favorite />
@@ -43,36 +46,24 @@ export default function MovieCard({ movie }: {
                         <Text style={styles.price}>Price</Text>
                     </View>
                 </View>
-                <Button title={isUpcoming ? "Kommer Snart" : "Köp nu"} disabled={isUpcoming} style={{ marginTop: 10 }}></Button>
+                <Button title="Köp nu"></Button>
             </View>
-        </TouchableOpacity>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    card: {
-        borderWidth: 1,
-        borderColor: "gray",
-        backgroundColor: "black",
-        borderRadius: 16,
-        overflow: "hidden",
-        margin: 10,
-        padding: 16,
-        width: 340,
-    },
     imagePlaceholder: {
-        height: 260,
+        alignSelf: "center",
         backgroundColor: "gray",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
         borderRadius: 12,
+        width: "100%",
+        aspectRatio: 2/3,
+
     },
     image: {
         width: "100%",
         height: "100%",
-        overflow: "hidden",
-        borderRadius: 12,
 
     },
     body: { padding: 20, gap: 4 },
