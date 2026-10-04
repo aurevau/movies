@@ -1,25 +1,22 @@
-import MovieCard from "@/app/components/movie-card";
-import SectionHeader from "@/app/components/section-header";
-import { ScrollView, View } from "react-native";
+import MovieRow from "@/components/movie-row";
+import { useMovieList } from "@/hooks/use-movie";
+import { discoverMovies, getTopRatedMovies, getUpcoming } from "@/services/api";
+import { ScrollView } from "react-native";
 
 
-export default function HomeScreen () {
-    return (
-      <ScrollView>
+export default function HomeScreen() {
+  const discover = useMovieList(() => discoverMovies({ sortBy: "popularity,desc" }));
+  const topRated = useMovieList(getTopRatedMovies);
+  const upcoming = useMovieList(getUpcoming);
+  return (
+    <ScrollView>
 
-        <View style={{flex: 1}}>
-           <View style={{marginVertical: 20}}>
-            <SectionHeader title={"Top picks"}></SectionHeader>
-            <MovieCard/>
-          </View>
+      <MovieRow title="Upptäck" {...discover} />
+      <MovieRow title="Högst betyg" {...topRated} />
+      <MovieRow title="Kommer snart" {...upcoming} />
 
-          
-
-  
-        </View>
-
-        </ScrollView>
-    )
+    </ScrollView>
+  )
 }
 
 
