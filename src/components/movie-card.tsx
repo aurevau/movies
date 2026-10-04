@@ -1,5 +1,6 @@
 import { Movie } from "@/domain/movie";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Button from "./button";
 import { Favorite } from "./favorite";
@@ -11,9 +12,18 @@ export default function MovieCard({ movie }: {
 }) {
     const today = new Date().toISOString().slice(0, 10);
     const isUpcoming = movie.release_date > today;
+    const router = useRouter();
 
     return (
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() =>
+                router.push({
+                    pathname: "/movie-details",
+                    params: { movie: String(movie.id)},
+                })
+            }
+        >
             <View style={styles.card}>
                 <View style={styles.imagePlaceholder}>
                     <Image source={{ uri: `${IMAGE_BASE}${movie.poster_path}` }} style={styles.image} resizeMode="cover"></Image>
