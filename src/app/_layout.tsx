@@ -16,6 +16,11 @@ export default function RootLayout() {
             sheetGrabberVisible: true,
             sheetCornerRadius: 24
           }}/>
+          <Stack.Screen name="movie-details" options={{headerShown: false,
+            presentation: "formSheet",
+            sheetGrabberVisible: true,
+            sheetCornerRadius: 24
+          }}/>
       </Stack>
     </ThemeProvider>
   )
