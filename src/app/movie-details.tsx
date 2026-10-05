@@ -30,7 +30,7 @@ export default function MovieDetailsScreen() {
         <View>
                 <View style={styles.imagePlaceholder}>
                     <Image source={{ uri: `${IMAGE_BASE}${movie.poster_path}` }} style={styles.image} resizeMode="cover"></Image>
-                    <Favorite />
+                    <Favorite movie={movie} />
                 </View>
                 <View style={styles.body}>
                     <View style={styles.headerRow}>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%",
-
+    
     },
     body: { padding: 20, gap: 4 },
     headerRow: { flexDirection: "row", justifyContent: "space-between", gap: 6 },
