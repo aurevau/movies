@@ -1,4 +1,5 @@
 import { Movie } from "@/domain/movie";
+import { useCart } from "@/store/cart";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -13,6 +14,7 @@ export default function MovieCard({ movie }: {
     const today = new Date().toISOString().slice(0, 10);
     const isUpcoming = movie.release_date > today;
     const router = useRouter();
+    const addToCart = useCart((s) => s.addToCart);
 
     return (
         <TouchableOpacity
@@ -43,7 +45,7 @@ export default function MovieCard({ movie }: {
                         <Text style={styles.price}>Price</Text>
                     </View>
                 </View>
-                <Button title={isUpcoming ? "Kommer Snart" : "Köp nu"} disabled={isUpcoming} style={{ marginTop: 10 }}></Button>
+                <Button title={isUpcoming ? "Kommer Snart" : "Köp nu"} disabled={isUpcoming}  onPress={() => addToCart(movie, 99)} style={{ marginTop: 10 }}></Button>
             </View>
         </TouchableOpacity>
     )

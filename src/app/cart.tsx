@@ -1,12 +1,30 @@
-import { StyleSheet, Text, View } from "react-native"
+import Button from "@/components/button";
+import CartRow from "@/components/cart-row";
+import { useCart } from "@/store/cart";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
-export default function CartScreen () {
+export default function CartScreen() {
+    const cart = useCart((s) => s.cart);
+    const addToCart = useCart((s) => s.addToCart);
+    const decrease = useCart((s) => s.decrease);
+    const clearCart = useCart((s) => s.clearCart);
     
+    if (cart.length === 0) {
+        return (
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <Text style={{ color: "white" }}>Kundvagnen är tom</Text>
+            </View>
+        )
+    }
+
     return (
-        <View style={styles.container}>
-        <Text style={styles.title}>Cart</Text>
-        <Text style={styles.sub}>Your cart is empty</Text>
-        </View>
+        <FlatList data={cart}
+            keyExtractor={(m) => String(m.movie.id)}
+            contentContainerStyle={{ padding: 16, gap: 12 }}
+            renderItem={({ item }) => <CartRow item={item} onIncrease={() => addToCart(item.movie, item.price)} onDecrease={() => decrease(item.movie.id)}/>}
+            ListHeaderComponent={
+                <Button title="Töm kundvagnen" onPress={clearCart} style={{marginTop: 16}}/>
+            } />
 
     )
 }
