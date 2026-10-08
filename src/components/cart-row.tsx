@@ -11,7 +11,7 @@ type Props = {
 const IMAGE_BASE = "https://image.tmdb.org/t/p/w154";
 export default function CartRow({ item, onDecrease, onIncrease }: Props) {
     return (
-        <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
+        <View style={{ flexDirection: "row", gap: 12, alignItems: "center", }}>
             {item.movie.poster_path && (
                 <Image source={{ uri: `${IMAGE_BASE}${item.movie.poster_path}` }} style={{ width: 50, aspectRatio: 2 / 3, borderRadius: 6 }} />
             )}
@@ -19,7 +19,7 @@ export default function CartRow({ item, onDecrease, onIncrease }: Props) {
                 <Text style={{ color: "white", fontWeight: "bold" }} numberOfLines={1}>
                     {item.movie.title}
                 </Text>
-                <Text style={{ color: "#A8A8A8" }}>
+                <Text style={{ color: "white" }}>
                     {item.amount} x {item.price}
                 </Text>
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
