@@ -8,18 +8,27 @@ export default function RootLayout() {
       <Stack screenOptions={{
         headerShown: false
       }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="cart" options={{headerShown: false,
-            presentation: "formSheet",
-            sheetAllowedDetents: [0.5, 1],
-            sheetInitialDetentIndex: 0,
-            sheetGrabberVisible: true,
-            sheetCornerRadius: 24
-          }}/>
-          <Stack.Screen name="movie-details" options={{headerShown: false,
-            presentation: "formSheet",
-            sheetGrabberVisible: true,
-            sheetCornerRadius: 24
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="cart" options={{
+          headerShown: false,
+          presentation: "formSheet",
+          sheetAllowedDetents: [0.5, 1],
+          sheetInitialDetentIndex: 0,
+          sheetGrabberVisible: true,
+          sheetCornerRadius: 24
+        }} />
+        <Stack.Screen name="movie-details" options={{
+          headerShown: false,
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetCornerRadius: 24
+        }} />
+        <Stack.Screen name="checkout" options={{
+          headerShown: true,
+          title: "Kassa",
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetCornerRadius: 24,
           }}/>
       </Stack>
     </ThemeProvider>

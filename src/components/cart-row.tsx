@@ -23,7 +23,7 @@ export default function CartRow({ item, onDecrease, onIncrease }: Props) {
                     {item.movie.title}
                 </Text>
                 <Text style={{ color: "white" }}>
-                    {item.amount} x {item.price}
+                    {item.amount} x {item.price} kr
                 </Text>
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
                     <Pressable onPress={onDecrease} hitSlop={12}>
