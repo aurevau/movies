@@ -1,4 +1,5 @@
 import { CartItem } from "@/domain/cart-item";
+import { useCart } from "@/store/cart";
 import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, Text, View } from "react-native";
 
@@ -10,6 +11,8 @@ type Props = {
 
 const IMAGE_BASE = "https://image.tmdb.org/t/p/w154";
 export default function CartRow({ item, onDecrease, onIncrease }: Props) {
+    const deleteFromCart = useCart((s) => s.deleteFromCart);
+
     return (
         <View style={{ flexDirection: "row", gap: 12, alignItems: "center", }}>
             {item.movie.poster_path && (
@@ -30,6 +33,8 @@ export default function CartRow({ item, onDecrease, onIncrease }: Props) {
                     <Pressable onPress={onIncrease} hitSlop={12}>
                         <Ionicons name="add-circle-outline" size={26} color={"white"} />
                     </Pressable>
+                    <Ionicons name="trash" onPress={() => deleteFromCart(item.movie.id)} size={18} color="white"></Ionicons>
+
                 </View>
             </View>
         </View>
