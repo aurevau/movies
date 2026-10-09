@@ -10,8 +10,6 @@ export default function CartScreen() {
     const addToCart = useCart((s) => s.addToCart);
     const decrease = useCart((s) => s.decrease);
     const clearCart = useCart((s) => s.clearCart);
-    const placeOrder = useCart((s) => s.placeOrder);
-    const orders = useCart((s) => s.orders);
 
     const total = cart.reduce((sum, item) => sum + item.price * item.amount, 0);
     const router = useRouter();
@@ -30,10 +28,8 @@ export default function CartScreen() {
         )
     }
 
-
     return (
         <>
-
             <FlatList data={cart}
                 keyExtractor={(m) => String(m.movie.id)}
                 contentContainerStyle={{ padding: 16, gap: 12 }}
