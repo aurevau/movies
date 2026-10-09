@@ -30,6 +30,11 @@ export default function RootLayout() {
           sheetGrabberVisible: true,
           sheetCornerRadius: 24,
           }}/>
+        <Stack.Screen name="order-confirmation" options={{
+          headerShown: false,
+          presentation: "fullScreenModal",
+          gestureEnabled: false,
+          }}/>
       </Stack>
     </ThemeProvider>
   )
