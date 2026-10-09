@@ -3,7 +3,7 @@ import OrderRow from "@/components/order-row";
 import { useCart } from "@/store/cart";
 import { useCurrentUser, useUser } from "@/store/user";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function CheckoutScreen() {
@@ -14,12 +14,35 @@ export default function CheckoutScreen() {
     const [name, onChangeName] = useState(user?.name ?? "");
     const [email, onChangeEmail] = useState(user?.email ?? "");
 
-    const disabled = name === "Name" && email === "Email";
-
+    const orderPlaced = useRef(false);
     const router = useRouter();
 
+    const isEmailValid = /^\S+@\S+\.\S+$/.test(email.trim());
+    const disabled = name.trim() === "" || !isEmailValid || cart.length === 0;
+
+
+    const onSubmit = () => {
+        orderPlaced.current = true;
+        const order = placeOrder(name, email);
+        if (!order) {
+            orderPlaced.current = false;
+            return;
+        }
+
+        router.dismissAll();
+        setTimeout(() => {
+            router.push({
+                pathname: "/order-confirmation",
+                params: { orderId: String(order.id) }
+            });
+        }, 350)
+
+    };
+
     useEffect(() => {
-        if (cart.length === 0) {
+        if (!useCart.persist.hasHydrated()) return;
+
+        if (cart.length === 0 && !orderPlaced.current) {
             router.canGoBack() ? router.back() : router.replace("/");
         }
     }, [cart.length]);
@@ -38,8 +61,10 @@ export default function CheckoutScreen() {
                     <TextInput style={styles.input} onChangeText={onChangeName} value={name} />
                     <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} />
 
-                    <Button disabled={disabled} style={{ backgroundColor: "#1A1A1A", marginTop: 18 }} title="Lägg beställning" onPress={() => placeOrder(name, email)
-                    }></Button>
+                    <Button disabled={disabled} style={{ backgroundColor: "#1A1A1A", marginTop: 18 }} title="Lägg beställning"
+                        onPress={onSubmit
+
+                        }></Button>
 
                     {!user && (
                         <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
@@ -65,7 +90,7 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: 12,
         borderColor: "#A8A8A8",
-        backgroundColor: "1A1A1A"
+        backgroundColor: "#1A1A1A"
 
     }
 });
