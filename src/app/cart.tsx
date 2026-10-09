@@ -16,8 +16,8 @@ export default function CartScreen() {
 
     const goToCheckout = () => {
         router.dismiss()
-        router.push("/checkout");
-    }
+        setTimeout(() => router.push("/checkout"), 350);
+    };
 
 
     if (cart.length === 0) {
