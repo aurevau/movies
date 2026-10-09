@@ -1,15 +1,18 @@
 import Button from "@/components/button";
 import OrderRow from "@/components/order-row";
 import { useCart } from "@/store/cart";
+import { useCurrentUser, useUser } from "@/store/user";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, TextInput, View } from "react-native";
+import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function CheckoutScreen() {
     const cart = useCart((s) => s.cart);
-    const placeOrder = useCart((s) => s.placeOrder);
-    const [name, onChangeName] = useState("Name");
-    const [email, onChangeEmail] = useState("Email");
+    const placeOrder = useUser((s) => s.placeOrder);
+
+    const user = useCurrentUser();
+    const [name, onChangeName] = useState(user?.name ?? "");
+    const [email, onChangeEmail] = useState(user?.email ?? "");
 
     const disabled = name === "Name" && email === "Email";
 
@@ -20,9 +23,9 @@ export default function CheckoutScreen() {
             router.canGoBack() ? router.back() : router.replace("/");
         }
     }, [cart.length]);
-    
 
-    
+
+
 
     return (
         <FlatList data={cart}
@@ -35,9 +38,15 @@ export default function CheckoutScreen() {
                     <TextInput style={styles.input} onChangeText={onChangeName} value={name} />
                     <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} />
 
-                    <Button disabled={disabled} style={{backgroundColor: "#1A1A1A", marginTop: 18}} title="Lägg beställning" onPress={() => placeOrder(name, email)
+                    <Button disabled={disabled} style={{ backgroundColor: "#1A1A1A", marginTop: 18 }} title="Lägg beställning" onPress={() => placeOrder(name, email)
                     }></Button>
 
+                    {!user && (
+                        <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
+                            <Text style={{ color: "white" }}>Har du ingen användare?</Text>
+                            <Text style={{ color: "white" }}>Ett konto skapas när du placerar en order.</Text>
+                        </View>
+                    )}
 
                 </View>
             }>
@@ -57,6 +66,6 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         borderColor: "#A8A8A8",
         backgroundColor: "1A1A1A"
-    
+
     }
 });
