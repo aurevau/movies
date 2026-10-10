@@ -1,3 +1,4 @@
+import { Genre } from "@/domain/genre";
 import { Movie } from "@/domain/movie";
 import { MovieFilters } from "@/domain/movie-filters";
 
@@ -14,7 +15,7 @@ export const discoverMovies = async ({ genreIds = [], sortBy = "popularity.desc"
         language: "sv-SE",
         sort_by: sortBy,
         page: String(page),
-        "voute_count.gte": "50",
+        "vote_count.gte": "50",
     });
 
     if (genreIds.length) params.set("with_genres", genreIds.join(","));
@@ -32,13 +33,6 @@ export const getTopRatedMovies = async (page = 1): Promise<Movie[]> => {
     return (await res.json()).results;
 };
 
-export const getUpcoming = async (page = 1): Promise<Movie[]> => {
-    const res = await fetch(`${BASE_URL}/movie/upcoming?language=sv-SE&page=${page}`, {headers});
-    if (!res.ok) throw new Error(`Could not load upcoming movies (error ${res.status})`);
-    return (await res.json()).results;
-};
-
-
 export const getMovie = async (id: number) => {
     const res = await fetch(`${BASE_URL}/movie/${id}?language=sv-SE`, {
         headers
@@ -47,3 +41,9 @@ export const getMovie = async (id: number) => {
     if (!res.ok) throw new Error(`Could not load movie (error ${res.status})`);
     return res.json();
 };
+
+export const getGenres = async () : Promise<Genre[]> => {
+    const res = await fetch(`${BASE_URL}/genre/movie/list?language=sv-SE`, {headers});
+    if (!res.ok) throw new Error(`Could not load genres (error ${res.status})`);
+    return (await res.json()).genres;
+}
