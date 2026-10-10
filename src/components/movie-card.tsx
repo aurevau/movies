@@ -1,4 +1,5 @@
 import { Movie } from "@/domain/movie";
+import { formatPrice, getPrice } from "@/domain/pricing";
 import { useCart } from "@/store/cart";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -11,8 +12,7 @@ const IMAGE_BASE = "https://image.tmdb.org/t/p/w342";
 export default function MovieCard({ movie }: {
     movie: Movie
 }) {
-    const today = new Date().toISOString().slice(0, 10);
-    const isUpcoming = movie.release_date > today;
+    const price = getPrice(movie);
     const router = useRouter();
     const addToCart = useCart((s) => s.addToCart);
 
@@ -22,14 +22,14 @@ export default function MovieCard({ movie }: {
             onPress={() =>
                 router.push({
                     pathname: "/movie-details",
-                    params: { movie: String(movie.id)},
+                    params: { movie: String(movie.id) },
                 })
             }
         >
             <View style={styles.card}>
                 <View style={styles.imagePlaceholder}>
                     <Image source={{ uri: `${IMAGE_BASE}${movie.poster_path}` }} style={styles.image} resizeMode="cover"></Image>
-                    <Favorite  movie={movie}/>
+                    <Favorite movie={movie} />
                 </View>
                 <View style={styles.body}>
                     <View style={styles.headerRow}>
@@ -39,13 +39,12 @@ export default function MovieCard({ movie }: {
                                 <Ionicons name="star" size={14} color="yellow" />
                                 <Text style={{ color: "white", fontSize: 13 }}>{movie.vote_average.toFixed(1)}</Text>
                             </View>
-                            <Text style={styles.eyebrow}>Genre</Text>
-                            <Text style={styles.desc}>Description</Text>
+                            <Text style={styles.price}>{formatPrice(price)}</Text>
+
                         </View>
-                        <Text style={styles.price}>Price</Text>
                     </View>
                 </View>
-                <Button title={isUpcoming ? "Kommer Snart" : "Köp nu"} disabled={isUpcoming}  onPress={() => addToCart(movie, 99)} style={{ marginTop: 10 }}></Button>
+                <Button title={"Köp nu"} onPress={() => addToCart(movie, price)} style={{ marginTop: 10 }}></Button>
             </View>
         </TouchableOpacity>
     )
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 16,
         width: 340,
+        justifyContent: "center"
     },
     imagePlaceholder: {
         height: 260,
@@ -82,14 +82,11 @@ const styles = StyleSheet.create({
     headerText: {
         flex: 1,
     },
-    eyebrow: {
-        fontSize: 11, letterSpacing: 1, color: "#A8A8A8",
-    },
     price: {
-        fontSize: 18, color: "#A8A8A8",
-    },
-    desc: {
-        fontSize: 12
+        marginTop: 8,
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#A8A8A8",
     },
     title: {
         fontWeight: "bold",

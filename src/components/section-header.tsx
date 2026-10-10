@@ -1,13 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 const SectionHeader = ({title}:{title: string}) => {
     return (
         <View style={styles.sectionHeader}>
             <Text style={{color: "#F6F6F6", fontWeight: "600", fontSize: 16}}>{title}</Text>
-
-            <TouchableOpacity activeOpacity={.8}>
-                <Text style={{color: "#920013"}}>See more</Text>
-            </TouchableOpacity>
         </View>
     )
 
