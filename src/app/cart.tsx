@@ -1,5 +1,6 @@
 import Button from "@/components/button";
 import CartRow from "@/components/cart-row";
+import { calculateTotal } from "@/domain/pricing";
 import { useCart } from "@/store/cart";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -11,9 +12,9 @@ export default function CartScreen() {
     const decrease = useCart((s) => s.decrease);
     const clearCart = useCart((s) => s.clearCart);
 
-    const total = cart.reduce((sum, item) => sum + item.price * item.amount, 0);
+    const total = calculateTotal(cart);
     const router = useRouter();
-
+ 
     const goToCheckout = () => {
         router.dismiss()
         setTimeout(() => router.push("/checkout"), 350);

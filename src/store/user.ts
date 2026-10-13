@@ -1,5 +1,5 @@
-import { Movie } from "@/domain/movie";
 import { Order } from "@/domain/order";
+import { calculateTotal } from "@/domain/pricing";
 import { User } from "@/domain/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
@@ -11,7 +11,6 @@ type UserState = {
     currentEmail: string | null;
     login: (name: string, email: string) => void;
     logout: () => void;
-    toggleFavorite: (movie: Movie) => void;
     placeOrder: (name: string, email: string) => Order | null;
 };
 
@@ -41,22 +40,6 @@ export const useUser = create<UserState>()(persist((set, get) => ({
         useCart.getState().clearCart();
     },
 
-    toggleFavorite: (movie) => set((state) => {
-        const key = state.currentEmail;
-        if(!key) return {};
-        const user = state.users[key];
-        const isFavorite = user.favorites.some((m) => m.id === movie.id);
-        return {
-            users: {
-                ...state.users,
-                [key]: {
-                    ...user,
-                    favorites: isFavorite ? user.favorites.filter((m) => m.id !== movie.id) : [...user.favorites, movie]
-                }
-            }
-        };
-    }),
-
     placeOrder: (name, email) => {
         const cart = useCart.getState().cart;
         if (cart.length === 0) return null;
@@ -69,7 +52,7 @@ export const useUser = create<UserState>()(persist((set, get) => ({
             name: name.trim(),
             email: key,
             items: [...cart],
-            totalAmount: cart.reduce((sum, i) => sum + i.price * i.amount, 0),
+            totalAmount: calculateTotal(cart),
             createdAt: new Date().toISOString(),
         };
 

@@ -5,31 +5,18 @@ import SectionHeader from "@/components/section-header";
 import { useGenres } from "@/hooks/use-genre";
 import { useMovieList } from "@/hooks/use-movie";
 import { discoverMovies, getTopRatedMovies } from "@/services/api";
-import { useCurrentUser } from "@/store/user";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 
 export default function HomeScreen() {
-  const discover = useMovieList(() => discoverMovies({ sortBy: "popularity,desc" }));
+  const discover = useMovieList(() => discoverMovies({ sortBy: "popularity.desc" }));
   const topRated = useMovieList(getTopRatedMovies);
 
   const genres = useGenres();
   const [selected, setSelected] = useState<number | null>(null);
 
-  const genreIds = selected ? [selected] : [];
-  const genreName = genres.find((g) => g.id === selected)?.name;
   const genreMovies = useMovieList(() => discoverMovies({ genreIds: selected ? [selected] : [] }), [selected]);
-
-  const user = useCurrentUser();
-  const orders = user?.orders ?? [];
-
-  useEffect(() => {
-    for (const order of orders) {
-      console.log(order)
-    }
-  }, [orders])
-
 
   return (
     <FlatList
