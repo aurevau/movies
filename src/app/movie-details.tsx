@@ -33,14 +33,16 @@ export default function MovieDetailsScreen() {
 
     if (loading) return <ActivityIndicator style={{ flex: 1 }} />;
 
-    if (error || !movie) return <Text style={{ flex: 1 }} />;
+    if (error || !movie) return <Text style={{ flex: 1 }}>{error ?? "Hittade inte filmen"}</Text>
 
     const price = getPrice(movie);
     return (
         <ScrollView>
             <View>
                 <View style={styles.imagePlaceholder}>
+                    {movie.poster_path && (
                     <Image source={{ uri: `${IMAGE_BASE}${movie.poster_path}` }} style={styles.image} resizeMode="cover"></Image>
+                    )}
                     <Favorite movie={movie} />
                 </View>
                 <View style={styles.body}>
