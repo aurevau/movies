@@ -1,4 +1,4 @@
-import { GenreChips } from "@/components/filter-chips";
+import { GenreChips } from "@/components/genre-chips";
 import MovieCard from "@/components/movie-card";
 import MovieRow from "@/components/movie-row";
 import SectionHeader from "@/components/section-header";
