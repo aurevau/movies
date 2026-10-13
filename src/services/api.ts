@@ -33,13 +33,23 @@ export const getTopRatedMovies = async (page = 1): Promise<Movie[]> => {
     return (await res.json()).results;
 };
 
-export const getMovie = async (id: number) => {
+export const getMovie = async (id: number): Promise<Movie> => {
     const res = await fetch(`${BASE_URL}/movie/${id}?language=sv-SE`, {
         headers
     });
 
     if (!res.ok) throw new Error(`Could not load movie (error ${res.status})`);
-    return res.json();
+    const data = await res.json();
+    return {
+        id: data.id,
+        title: data.title,
+        poster_path: data.poster_path,
+        genre_ids: (data.genres ?? []).map((g: Genre) => g.id),
+        vote_average: data.vote_average,
+        vote_count: data.vote_count,
+        release_date: data.release_date,
+        popularity: data.popularity
+    };
 };
 
 export const getGenres = async () : Promise<Genre[]> => {
