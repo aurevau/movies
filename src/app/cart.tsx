@@ -14,7 +14,7 @@ export default function CartScreen() {
 
     const total = calculateTotal(cart);
     const router = useRouter();
-
+ 
     const goToCheckout = () => {
         router.dismiss()
         setTimeout(() => router.push("/checkout"), 350);
