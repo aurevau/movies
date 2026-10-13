@@ -11,7 +11,7 @@ import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 
 export default function HomeScreen() {
-  const discover = useMovieList(() => discoverMovies({ sortBy: "popularity,desc" }));
+  const discover = useMovieList(() => discoverMovies({ sortBy: "popularity.desc" }));
   const topRated = useMovieList(getTopRatedMovies);
 
   const genres = useGenres();
