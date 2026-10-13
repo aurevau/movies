@@ -20,7 +20,6 @@ const newUser = (name: string, email: string): User => ({
     name: name.trim(),
     email: userKey(email),
     orders: [],
-    favorites: [],
 });
 
 export const useUser = create<UserState>()(persist((set, get) => ({
