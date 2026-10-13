@@ -16,7 +16,7 @@ export default function MovieRow({ title, movies, loading, error }: Props) {
         <View style={{ marginVertical: 20 }}>
             <SectionHeader title={title} />
             {loading && <ActivityIndicator style={{ marginTop: 16 }} />}
-            {error && <Text style={{ margin: 16, color: "white" }} />}
+            {error && <Text style={{ margin: 16, color: "white" }}>{error}</Text>}
             {!loading && !error && (
                 <FlatList data={movies.slice(0, 10)}
                     keyExtractor={(movie) => String(movie.id)}
