@@ -1,3 +1,4 @@
+import { CartItem } from "./cart-item";
 import { Movie } from "./movie";
 
 export const getPrice = (movie: Movie): number => {
@@ -10,3 +11,5 @@ export const getPrice = (movie: Movie): number => {
 }
 
 export const formatPrice = (price: number) => `${price} kr`
+
+export const calculateTotal = (items: CartItem[]): number => items.reduce((sum, item) => sum + item.price * item.amount, 0);

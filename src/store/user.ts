@@ -1,5 +1,6 @@
 import { Movie } from "@/domain/movie";
 import { Order } from "@/domain/order";
+import { calculateTotal } from "@/domain/pricing";
 import { User } from "@/domain/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
@@ -69,7 +70,7 @@ export const useUser = create<UserState>()(persist((set, get) => ({
             name: name.trim(),
             email: key,
             items: [...cart],
-            totalAmount: cart.reduce((sum, i) => sum + i.price * i.amount, 0),
+            totalAmount: calculateTotal(cart),
             createdAt: new Date().toISOString(),
         };
 
