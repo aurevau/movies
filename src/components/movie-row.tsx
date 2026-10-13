@@ -8,7 +8,6 @@ type Props = {
     movies: Movie[];
     loading: boolean;
     error: string | null;
-    onSeeAll?: () => void;
 };
 
 export default function MovieRow({ title, movies, loading, error }: Props) {
