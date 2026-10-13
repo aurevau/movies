@@ -1,4 +1,3 @@
-import { Movie } from "@/domain/movie";
 import { Order } from "@/domain/order";
 import { calculateTotal } from "@/domain/pricing";
 import { User } from "@/domain/user";
@@ -12,7 +11,6 @@ type UserState = {
     currentEmail: string | null;
     login: (name: string, email: string) => void;
     logout: () => void;
-    toggleFavorite: (movie: Movie) => void;
     placeOrder: (name: string, email: string) => Order | null;
 };
 
@@ -41,22 +39,6 @@ export const useUser = create<UserState>()(persist((set, get) => ({
         set({ currentEmail: null});
         useCart.getState().clearCart();
     },
-
-    toggleFavorite: (movie) => set((state) => {
-        const key = state.currentEmail;
-        if(!key) return {};
-        const user = state.users[key];
-        const isFavorite = user.favorites.some((m) => m.id === movie.id);
-        return {
-            users: {
-                ...state.users,
-                [key]: {
-                    ...user,
-                    favorites: isFavorite ? user.favorites.filter((m) => m.id !== movie.id) : [...user.favorites, movie]
-                }
-            }
-        };
-    }),
 
     placeOrder: (name, email) => {
         const cart = useCart.getState().cart;
