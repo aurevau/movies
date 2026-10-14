@@ -16,7 +16,7 @@ export default function OrderConfirmationScreen() {
 
     if (!order) {
         return (
-            <View style={{ flex: 1, backgroundColor: "#0F0F0F", alignItems: "center", justifyContent: "center", padding: 24 }}>
+            <View style={{ flex: 1, backgroundColor: "#1A1A1A", alignItems: "center", justifyContent: "center", padding: 24 }}>
                 <Text style={{ color: "white", marginBottom: 16 }}>
                     Kunde inte hitta din order
                 </Text>
@@ -26,7 +26,7 @@ export default function OrderConfirmationScreen() {
     }
     return (
         <FlatList
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: "#1A1A1A" }}
             data={order.items}
             keyExtractor={(item) => String(item.movie.id)}
             contentContainerStyle={{ padding: 16, gap: 12, paddingTop: 60 }}
