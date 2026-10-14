@@ -7,7 +7,7 @@ En app där man bläddrar bland posters (filmer) hämtade från TMDB, filtrerar 
 - Filterring på genre
 - Detaljvy per film med betyg och pris
 - Kundvagn (lägg till, minska, ta bort) och checkout med validering
-- Favorites per användare
+- Favorites sparas lokalt 
 - Laddningsindikatorer och felmeddelanden
 
   ## Teknik
@@ -22,7 +22,7 @@ En app där man bläddrar bland posters (filmer) hämtade från TMDB, filtrerar 
   - `app/` skärmar och routing
  
   ### Vidareutveckling
-  - Ett authflöde där man kan skapa en användare utan att köpa något, så att favoriter kan knytas till användaren.
+  - Ett authflöde där man kan skapa en användare utan att köpa något
   - Fritextsökning mot TMDB:s sökendpoint
   - Paginering
   - Ljust/mörkt tema som följer systemet
