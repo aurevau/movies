@@ -20,4 +20,10 @@ En app där man bläddrar bland posters (filmer) hämtade från TMDB, filtrerar 
   - `store/` globalt tillstånd med persist
   - `components/` återanvändbara ui-komponenter
   - `app/` skärmar och routing
+ 
+  ### Vidareutveckling
+  - Ett authflöde där man kan skapa en användare utan att köpa något, så att favoriter kan knytas till användaren.
+  - Fritextsökning mot TMDB:s sökendpoint
+  - Paginering
+  - Ljust/mörkt tema som följer systemet
 
