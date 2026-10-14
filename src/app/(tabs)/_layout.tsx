@@ -32,13 +32,13 @@ export default function TabLayout() {
     }}
     >
       <Tabs.Screen name='(home)/index' options={{
-        title: "Home",
+        title: "Hem",
         tabBarIcon: ({focused, color, size}) => (
           <Ionicons name = {focused ? "home" : "home-outline"} size={size} color={color}/>
         )
       }} />
       <Tabs.Screen name='(home)/favorites' options={{
-        title: "Favorites",
+        title: "Favoriter",
         tabBarIcon: ({focused, color, size}) => (
           <Ionicons name = {focused ? "heart" : "heart-outline"} size={size} color={color}/>
         )
