@@ -1,5 +1,6 @@
 import Button from "@/components/button";
 import OrderRow from "@/components/order-row";
+import { calculateTotal } from "@/domain/pricing";
 import { useCart } from "@/store/cart";
 import { useCurrentUser, useUser } from "@/store/user";
 import { useRouter } from "expo-router";
@@ -19,6 +20,8 @@ export default function CheckoutScreen() {
 
     const isEmailValid = /^\S+@\S+\.\S+$/.test(email.trim());
     const disabled = name.trim() === "" || !isEmailValid || cart.length === 0;
+
+     const total = calculateTotal(cart);
 
 
     const onSubmit = () => {
@@ -60,7 +63,10 @@ export default function CheckoutScreen() {
                 <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
                     <TextInput style={styles.input} onChangeText={onChangeName} value={name} />
                     <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} />
-
+                     <View style={{flexDirection: "row", flex: 1, alignItems: "center", justifyContent: "center", marginTop: 50}}>
+                         <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>Totalt: </Text>
+                        <Text style={{ color: "white", fontSize: 18 }}>{total} kr</Text>
+                    </View>
                     <Button disabled={disabled} style={{ backgroundColor: "#1A1A1A", marginTop: 18 }} title="Lägg beställning"
                         onPress={onSubmit
 
