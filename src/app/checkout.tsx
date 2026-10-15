@@ -74,7 +74,7 @@ export default function CheckoutScreen() {
 
                     {!user && (
                         <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
-                            <Text style={{ color: "white" }}>Har du ingen användare?</Text>
+                            <Text style={{ color: "white", paddingTop:20 }}>Har du ingen användare?</Text>
                             <Text style={{ color: "white" }}>Ett konto skapas när du placerar en order.</Text>
                         </View>
                     )}
