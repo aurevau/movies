@@ -25,5 +25,5 @@ En app där man bläddrar bland posters (filmer) hämtade från TMDB, filtrerar 
   - Ett authflöde där man kan skapa en användare utan att köpa något
   - Fritextsökning mot TMDB:s sökendpoint
   - Paginering
-  - Ljust/mörkt tema som följer systemet
+  - Ljust/mörkt tema som följer systemet (inte hårdkokade färger)
 
