@@ -28,7 +28,9 @@ export default function MovieCard({ movie }: {
         >
             <View style={styles.card}>
                 <View style={styles.imagePlaceholder}>
-                    <Image source={{ uri: `${IMAGE_BASE}${movie.poster_path}` }} style={styles.image} resizeMode="cover"></Image>
+                    {movie.poster_path && (
+                        <Image source={{ uri: `${IMAGE_BASE}${movie.poster_path}` }} style={styles.image} resizeMode="cover" />
+                    )}
                     <Favorite movie={movie} />
                 </View>
                 <View style={styles.body}>
