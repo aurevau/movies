@@ -21,7 +21,7 @@ export default function CheckoutScreen() {
     const isEmailValid = /^\S+@\S+\.\S+$/.test(email.trim());
     const disabled = name.trim() === "" || !isEmailValid || cart.length === 0;
 
-     const total = calculateTotal(cart);
+    const total = calculateTotal(cart);
 
 
     const onSubmit = () => {
@@ -61,10 +61,10 @@ export default function CheckoutScreen() {
             renderItem={({ item }) => <OrderRow item={item} />}
             ListFooterComponent={
                 <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
-                    <TextInput style={styles.input} onChangeText={onChangeName} value={name} />
-                    <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} />
-                     <View style={{flexDirection: "row", flex: 1, alignItems: "center", justifyContent: "center", marginTop: 50}}>
-                         <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>Totalt: </Text>
+                    <TextInput style={styles.input} onChangeText={onChangeName} value={name} placeholder="Namn" placeholderTextColor="#666" autoCapitalize="words" />
+                    <TextInput style={styles.input} onChangeText={onChangeEmail} value={email} placeholder="E-post" placeholderTextColor="#666" keyboardType="email-address" autoCapitalize="none" autoCorrect={false} />
+                    <View style={{ flexDirection: "row", flex: 1, alignItems: "center", justifyContent: "center", marginTop: 50 }}>
+                        <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>Totalt: </Text>
                         <Text style={{ color: "white", fontSize: 18 }}>{total} kr</Text>
                     </View>
                     <Button disabled={disabled} style={{ backgroundColor: "#1A1A1A", marginTop: 18 }} title="Lägg beställning"
